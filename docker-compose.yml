@@ -1,0 +1,86 @@
+
+services:
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: evoting_postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: evoting
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    mem_limit: 1g
+    cpus: "1.0"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d evoting"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    container_name: evoting_redis
+    command: redis-server --maxmemory 512mb --maxmemory-policy allkeys-lru
+    ports:
+      - "6379:6379"
+    mem_limit: 600m
+    cpus: "0.5"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  pulsar:
+    image: apachepulsar/pulsar:3.1.0
+    container_name: evoting_pulsar
+    command: bin/pulsar standalone
+    environment:
+      PULSAR_MEM: "-Xms512m -Xmx1200m"
+    ports:
+      - "6650:6650"
+      - "8080:8080"
+    mem_limit: 1500m
+    cpus: "1.5"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf http://localhost:8080/admin/v2/clusters || exit 1"]
+      interval: 20s
+      timeout: 10s
+      retries: 10
+    restart: unless-stopped
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: evoting_backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/evoting
+      REDIS_URL: redis://redis:6379/0
+      PULSAR_URL: pulsar://pulsar:6650
+      SECRET_KEY: ${SECRET_KEY}
+      JWT_ALGORITHM: HS256
+      JWT_EXPIRY_MINUTES: 60
+      LIVENESS_NONCE_TTL_SECONDS: 90
+    ports:
+      - "8000:8000"
+    mem_limit: 1g
+    cpus: "2.0"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      pulsar:
+        condition: service_healthy
+    volumes:
+      - ./backend:/app
+    restart: unless-stopped
+
+volumes:
+  postgres_data:

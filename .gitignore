@@ -1,0 +1,158 @@
+# ------------------------------
+
+# OS / System files
+
+# ------------------------------
+
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# ------------------------------
+
+# Environment variables / secrets
+
+# ------------------------------
+
+.env
+.env.*
+!.env.example
+
+# ------------------------------
+
+# Node / Frontend (React / Next / Expo)
+
+# ------------------------------
+
+node_modules/
+.expo/
+.expo-shared/
+dist/
+build/
+.next/
+out/
+coverage/
+*.log
+
+# Expo
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# React Native
+
+android/.gradle/
+android/app/build/
+android/local.properties
+ios/Pods/
+ios/build/
+
+# Metro bundler
+
+.metro-cache/
+
+# ------------------------------
+
+# Python Backend
+
+# ------------------------------
+
+**pycache**/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+
+venv/
+.venv/
+env/
+ENV/
+
+# Python tools
+
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# ------------------------------
+
+# Database / Local data
+
+# ------------------------------
+
+*.sqlite3
+*.db
+*.log
+
+# ------------------------------
+
+# Docker
+
+# ------------------------------
+
+docker-compose.override.yml
+*.tar
+
+# ------------------------------
+
+# IDE / Editor
+
+# ------------------------------
+
+.vscode/
+.idea/
+*.code-workspace
+
+# ------------------------------
+
+# Misc
+
+# ------------------------------
+
+*.pem
+*.key
+*.crt
+*.pid
+*.seed
+
+# ------------------------------
+
+# Logs
+
+# ------------------------------
+
+logs/
+*.log
+
+# ------------------------------
+
+# Temporary files
+
+# ------------------------------
+
+tmp/
+temp/
+# Auto normalize text files
+* text=auto
+
+# Force LF for code (important for Docker, Linux, CI)
+*.js text eol=lf
+*.ts text eol=lf
+*.tsx text eol=lf
+*.json text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.sh text eol=lf
+*.py text eol=lf
+
+# Windows-specific files
+*.bat text eol=crlf
+*.cmd text eol=crlf

@@ -1,0 +1,27 @@
+{
+  "expo": {
+    "name": "evoting-mvp",
+    "slug": "evoting-mvp",
+    "version": "1.0.0",
+
+    "android": {
+      "package": "com.evoting.mvp",
+      "permissions": ["CAMERA"]
+    },
+
+    "ios": {
+      "infoPlist": {
+        "NSCameraUsageDescription": "Camera is required for liveness verification."
+      }
+    },
+
+    "plugins": [
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow evoting-mvp to access your camera."
+        }
+      ]
+    ]
+  }
+}

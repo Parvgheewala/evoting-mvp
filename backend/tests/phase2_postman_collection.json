@@ -1,0 +1,111 @@
+{
+  "info": {
+    "name": "E-Voting Phase 2 — Registration",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000" },
+    { "key": "session_id", "value": "" },
+    { "key": "nonce", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "1. Health Check",
+      "request": {
+        "method": "GET",
+        "url": "{{base_url}}/health/full"
+      }
+    },
+    {
+      "name": "2. Registration Initiate",
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "var r = pm.response.json();",
+          "pm.collectionVariables.set('session_id', r.liveness_session_id);",
+          "pm.collectionVariables.set('nonce', r.nonce);",
+          "pm.collectionVariables.set('challenges', JSON.stringify(r.challenges));",
+          "pm.test('Status 201', () => pm.response.to.have.status(201));",
+          "pm.test('Has session_id', () => pm.expect(r.liveness_session_id).to.be.a('string'));",
+          "pm.test('Has 3 challenges', () => pm.expect(r.challenges.length).to.eql(3));"
+        ]}
+      }],
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/registration/initiate",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"aadhaar_id\": \"888877776666\",\n  \"voter_id\": \"GT1234567\",\n  \"full_name\": \"Smoke Test User\"\n}"
+        }
+      }
+    },
+    {
+      "name": "3. Liveness Submit",
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status 200', () => pm.response.to.have.status(200));",
+          "pm.test('liveness_passed true', () => pm.expect(pm.response.json().liveness_passed).to.be.true);"
+        ]}
+      }],
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/registration/liveness",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "session_id", "value": "{{session_id}}" },
+            { "key": "nonce", "value": "{{nonce}}" },
+            { "key": "challenge_results", "value": "[{\"challenge\":\"blink_twice\",\"passed\":true},{\"challenge\":\"smile\",\"passed\":true},{\"challenge\":\"nod\",\"passed\":true}]" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "4. Verify Identity",
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status 200', () => pm.response.to.have.status(200));",
+          "var r = pm.response.json();",
+          "pm.test('Status active', () => pm.expect(r.registration_status).to.eql('active'));",
+          "pm.test('UTI 64 chars', () => pm.expect(r.uti.length).to.eql(64));",
+          "pm.collectionVariables.set('uti', r.uti);"
+        ]}
+      }],
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/registration/verify-identity",
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            { "key": "session_id", "value": "{{session_id}}" },
+            { "key": "aadhaar_id", "value": "888877776666" },
+            { "key": "voter_id", "value": "GT1234567" },
+            { "key": "live_image", "type": "file", "src": "test_face.jpg" }
+          ]
+        }
+      }
+    },
+    {
+      "name": "5. Duplicate Registration (expect 409)",
+      "event": [{
+        "listen": "test",
+        "script": { "exec": [
+          "pm.test('Status 409', () => pm.response.to.have.status(409));",
+          "pm.test('DUPLICATE_REGISTRATION error', () => pm.expect(pm.response.json().detail.error).to.eql('DUPLICATE_REGISTRATION'));"
+        ]}
+      }],
+      "request": {
+        "method": "POST",
+        "url": "{{base_url}}/api/v1/registration/initiate",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"aadhaar_id\": \"888877776666\",\n  \"voter_id\": \"GT1234567\",\n  \"full_name\": \"Duplicate\"\n}"
+        }
+      }
+    }
+  ]
+}
