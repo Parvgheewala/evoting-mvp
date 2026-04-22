@@ -74,5 +74,5 @@ app.add_middleware(
 
 # Only health router registered in Phase 1
 # registration, voting, audit routers added in later phases
-app.include_router(health.router, prefix="/health", tags=["health"])
+app.include_router(health.router, prefix="/api/v1/health", tags=["health"])
 app.include_router(registration.router, prefix="/api/v1", tags=["registration"])

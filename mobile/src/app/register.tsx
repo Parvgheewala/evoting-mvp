@@ -11,6 +11,7 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { registerVoter } from "../api/client";
 
 /* ── Validation helpers ── */
 const isValidAadhaar = (val: string) => /^\d{12}$/.test(val.trim());
@@ -56,7 +57,7 @@ export default function RegisterScreen() {
   }
 
   /* ── Submit ── */
-  function handleContinue() {
+  async function handleContinue() {
     const aadhaarOk = isValidAadhaar(aadhaar.value);
     const voterIDOk = isValidVoterID(voterID.value);
 
@@ -77,16 +78,38 @@ export default function RegisterScreen() {
     setLoading(true);
 
     // Simulate brief validation delay before navigating
-    setTimeout(() => {
-      setLoading(false);
+    try {
+      
+
+      const response = await registerVoter({
+        aadhaar_id: aadhaar.value,
+        voter_id:   voterID.value,
+        full_name:  "Voter",   // TODO: add full_name field to register form
+      });
+
       router.push({
         pathname: "/liveness",
         params: {
-          aadhaarId: aadhaar.value,
-          voterId: voterID.value,
+          aadhaarId:  aadhaar.value,
+          voterId:    voterID.value,
+          sessionId:  response.liveness_session_id,
+          nonce:      response.nonce,
+          challenges: JSON.stringify(response.challenges),
         },
       });
-    }, 600);
+
+    } catch (err: any) {
+      setLoading(false);
+      // Show inline error — the field error state is reused here
+      setAadhaar((prev) => ({
+        ...prev,
+        error: err?.message ?? "Registration failed. Please try again.",
+        touched: true,
+      }));
+    } finally {
+      setLoading(false);
+    }
+
   }
 
   const formReady =

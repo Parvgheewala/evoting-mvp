@@ -5,13 +5,14 @@ import axios, {
   InternalAxiosRequestConfig,
 } from "axios";
 import { useAuthStore } from "../store/authStore";
+import { config } from "../config";
 
 /* ══════════════════════════════════════
    Config
 ══════════════════════════════════════ */
-const BASE_URL     = "http://10.252.102.243:8000";
-const TIMEOUT_MS   = 10_000;
-const API_VERSION  = "api/v1";
+const BASE_URL     = config.BASE_URL;
+const TIMEOUT_MS   = config.TIMEOUT_MS;
+const API_VERSION  = config.API_VERSION;
 
 /* ══════════════════════════════════════
    Axios instance
@@ -124,47 +125,152 @@ function resolveErrorMessage(
 
 /* ── Health check ── */
 export async function checkHealth(): Promise<{ status: string }> {
-  const res = await apiClient.get("/health");
+  // Health endpoint is at /api/v1/health/full
+  console.log(BASE_URL);
+  const res = await axios.get(`${BASE_URL}${API_VERSION}/health/full`, {
+    timeout: 5_000,
+  });
   return res.data;
 }
 
-/* ── Register voter ── */
+
+/* ── Registration initiation ── */
 export type RegisterPayload = {
   aadhaar_id: string;
   voter_id:   string;
+  full_name:  string;
 };
 
+/**
+ * Response from POST /api/v1/registration/initiate
+ * Contains the liveness session details needed for the next step.
+ */
 export type RegisterResponse = {
-  session_token: string;
-  voter_id:      string;
-  message:       string;
+  registration_id:     string;
+  liveness_session_id: string;
+  challenges:          string[];   // e.g. ["blink_twice", "turn_head_left", "smile"]
+  nonce:               string;
+  nonce_expires_at:    string;     // ISO 8601
 };
 
 export async function registerVoter(
   payload: RegisterPayload
 ): Promise<RegisterResponse> {
-  const res = await apiClient.post<RegisterResponse>("/auth/register", payload);
+  const res = await apiClient.post<RegisterResponse>(
+    "/registration/initiate",
+    payload
+  );
   return res.data;
 }
 
 /* ── Liveness verification ── */
+
+/**
+ * Per-frame facial signal — mirrors FrameData from LivenessCamera.tsx.
+ * Sent to backend so it can validate motion patterns server-side.
+ */
+export type FrameData = {
+  leftEyeOpen:  number;
+  rightEyeOpen: number;
+  yaw:          number;
+  pitch:        number;
+  timestamp:    number;
+};
+
+/**
+ * Single challenge completion event.
+ * challenge_results is serialised to JSON string for multipart form.
+ */
+export type ChallengeResult = {
+  challenge:    string;
+  passed:       boolean;
+  timestamp_ms: number;
+};
+
+/**
+ * Full liveness submission payload.
+ * Sent as multipart/form-data to POST /api/v1/registration/liveness
+ */
 export type LivenessPayload = {
-  voter_id:    string;
-  image_base64: string;
+  session_id:        string;          // UUID from /initiate
+  nonce:             string;          // hex nonce from /initiate
+  challenge_results: ChallengeResult[];
+  frames:            FrameData[];     // frame signal array for backend validation
+  image_base64?:     string;          // captured face image (optional for MVP)
+  image_uri?:        string;          // local file URI for FormData append
 };
 
 export type LivenessResponse = {
-  passed:        boolean;
-  session_token: string;
-  message:       string;
+  liveness_passed: boolean;
+  session_id:      string;
 };
 
-export async function verifyLiveness(
+/**
+ * Submit liveness challenge results to the backend.
+ *
+ * Sends multipart/form-data with:
+ *   - session_id    (form field)
+ *   - nonce         (form field)
+ *   - challenge_results (form field — JSON string)
+ *   - frames_meta   (form field — JSON string, for backend frame validation)
+ *   - face_frames   (file — the captured image, if URI provided)
+ *
+ * The backend IGNORES any top-level "passed" field.
+ * Only the computed challenge_results and frame data are trusted.
+ */
+export async function submitLiveness(
   payload: LivenessPayload
 ): Promise<LivenessResponse> {
-  const res = await apiClient.post<LivenessResponse>("/auth/liveness", payload);
+  const form = new FormData();
+
+  form.append("session_id", payload.session_id);
+  form.append("nonce",      payload.nonce);
+
+  // challenge_results must be a JSON string (backend does json.loads on it)
+  form.append(
+    "challenge_results",
+    JSON.stringify(payload.challenge_results)
+  );
+
+  // frames_meta: backend will use this in B4 for motion validation
+  form.append(
+    "frames_meta",
+    JSON.stringify(payload.frames)
+  );
+
+  // Attach the captured image if a local URI was provided
+  if (payload.image_uri) {
+    const filename = payload.image_uri.split("/").pop() ?? "liveness.jpg";
+    const match    = /\.(\w+)$/.exec(filename);
+    const mimeType = match ? `image/${match[1]}` : "image/jpeg";
+
+    // React Native FormData accepts { uri, name, type } objects
+    form.append("face_frames", {
+      uri:  payload.image_uri,
+      name: filename,
+      type: mimeType,
+    } as any);
+  }
+
+  const res = await apiClient.post<LivenessResponse>(
+    "/registration/liveness",
+    form,
+    {
+      headers: {
+        // Let axios set the correct multipart boundary automatically
+        "Content-Type": "multipart/form-data",
+      },
+      // Increase timeout for image upload
+      timeout: 30_000,
+    }
+  );
+
   return res.data;
 }
+
+// verifyLiveness() removed in Phase 2.5 (STEP B5).
+// Use submitLiveness() from this file directly.
+// The old endpoint /auth/liveness no longer exists.
 
 /* ── Fetch ballot ── */
 export type BallotResponse = {

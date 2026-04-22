@@ -18,10 +18,16 @@ export default function HomeScreen() {
 
   // ✅ moved inside component (FIX)
   useEffect(() => {
-    checkHealth()
-      .then(() => setApiStatus("online"))
-      .catch(() => setApiStatus("offline"));
-  }, []);
+  checkHealth()
+    .then((res) => {
+      console.log("Health OK:", res);
+      setApiStatus("online");
+    })
+    .catch((err) => {
+      console.log("Health FAILED:", err);
+      setApiStatus("offline");
+    });
+}, []);
 
   // ✅ still here (unchanged logic)
   console.log("[stores]", { authStatus, votingStatus });

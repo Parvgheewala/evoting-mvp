@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>FaceProcessor</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+    }
+
+    /* Video and canvas fill the WebView but are visually hidden —
+       the React Native CameraView is the visible camera feed.
+       We only need these for MediaPipe inference. */
+    #video {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      opacity: 0;          /* hidden — RN CameraView shows the feed */
+      transform: scaleX(-1); /* mirror for front camera */
+    }
+
+    #canvas {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      opacity: 0;          /* inference only — not displayed */
+    }
+
+    /* Status overlay — visible to help debug in dev mode */
+    #status {
+      position: absolute;
+      bottom: 8px;
+      left: 0; right: 0;
+      text-align: center;
+      font-family: monospace;
+      font-size: 11px;
+      color: rgba(255,255,255,0.5);
+      pointer-events: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <!-- Hidden image element — receives base64 frames from React Native -->
+  <img    id="img"    style="position:absolute;opacity:0;width:1px;height:1px;" />
+  <canvas id="canvas" style="position:absolute;opacity:0;pointer-events:none;"></canvas>
+  <div    id="status" style="position:absolute;bottom:8px;left:0;right:0;text-align:center;font-family:monospace;font-size:11px;color:rgba(255,255,255,0.5);">
+    Initialising…
+  </div>
+
+  <!--
+    MediaPipe FaceMesh via CDN.
+    These are the stable pinned versions used by the design doc.
+  -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"
+          crossorigin="anonymous"></script>
+
+<script>
+  // ── Utilities ────────────────────────────────────────────────────────
+  const statusEl = document.getElementById('status');
+
+  function setStatus(msg) {
+    statusEl.textContent = msg;
+  }
+
+  function postToRN(payload) {
+    if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+      window.ReactNativeWebView.postMessage(JSON.stringify(payload));
+    } else {
+      console.debug('[FaceProcessor]', payload.type, payload);
+    }
+  }
+
+  // ── Frame throttling — 5 FPS ─────────────────────────────────────────
+  let lastFrameTime = 0;
+  const FRAME_INTERVAL_MS = 200;
+
+  function shouldProcessFrame() {
+    const now = Date.now();
+    if (now - lastFrameTime < FRAME_INTERVAL_MS) return false;
+    lastFrameTime = now;
+    return true;
+  }
+
+  // ── Signal extraction (unchanged) ────────────────────────────────────
+  function dist(a, b) {
+    return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+  }
+
+  const LEFT_EYE_IDX  = [33,  160, 158, 133, 153, 144];
+  const RIGHT_EYE_IDX = [362, 385, 387, 263, 373, 380];
+
+  function computeEAR(lm, indices) {
+    const [p1, p2, p3, p4, p5, p6] = indices.map(i => lm[i]);
+    const denom = 2 * dist(p1, p4);
+    if (denom === 0) return 0;
+    return (dist(p2, p6) + dist(p3, p5)) / denom;
+  }
+
+  function computeYaw(lm) {
+    const nose  = lm[1];
+    const left  = lm[234];
+    const right = lm[454];
+    return (nose.x - (left.x + right.x) / 2) * 200;
+  }
+
+  function computePitch(lm) {
+    return (lm[152].y - lm[10].y) * 200;
+  }
+
+  function computeSmile(lm) {
+    return dist(lm[61], lm[291]) * 10;
+  }
+
+  function convertLandmarksToFrame(lm) {
+    return {
+      leftEyeOpen:  computeEAR(lm, LEFT_EYE_IDX),
+      rightEyeOpen: computeEAR(lm, RIGHT_EYE_IDX),
+      yaw:          computeYaw(lm),
+      pitch:        computePitch(lm),
+      smileScore:   computeSmile(lm),
+      timestamp:    Date.now(),
+    };
+  }
+
+  // ── MediaPipe FaceMesh setup ──────────────────────────────────────────
+  // Processes static images injected from React Native — no camera stream.
+  const img    = document.getElementById('img');
+  const canvas = document.getElementById('canvas');
+
+  let faceMesh = null;
+
+  window.addEventListener('load', () => {
+  faceMesh = new FaceMesh({
+    locateFile: (file) =>
+      `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`,
+  });
+
+  faceMesh.setOptions({
+    maxNumFaces:            1,
+    refineLandmarks:        true,
+    minDetectionConfidence: 0.5,
+    minTrackingConfidence:  0.5,
+  });
+
+  faceMesh.onResults((results) => {
+    const landmarks = results.multiFaceLandmarks;
+
+    if (!landmarks || landmarks.length === 0) {
+      postToRN({ type: 'NO_FACE' });
+      setStatus('No face detected');
+      return;
+    }
+
+    const lm    = landmarks[0];
+    const frame = convertLandmarksToFrame(lm);
+
+    if (
+      typeof frame.leftEyeOpen !== 'number' || isNaN(frame.leftEyeOpen) ||
+      typeof frame.yaw         !== 'number' || isNaN(frame.yaw)
+    ) {
+      postToRN({ type: 'INVALID_FRAME', reason: 'NaN in signals' });
+      return;
+    }
+
+    postToRN({ type: 'FRAME', frame });
+    setStatus(
+      `EAR L:${frame.leftEyeOpen.toFixed(2)} R:${frame.rightEyeOpen.toFixed(2)}` +
+      ` | yaw:${frame.yaw.toFixed(1)} pitch:${frame.pitch.toFixed(1)}` +
+      ` | smile:${frame.smileScore.toFixed(3)}`
+    );
+  });
+
+  setStatus('FaceProcessor ready — awaiting frames');
+  postToRN({ type: 'READY' });
+});
+
+  // ── Image injection handler ───────────────────────────────────────────
+  // React Native sends base64 JPEG frames via injectJavaScript.
+  // We draw them onto the hidden <img>, then send to FaceMesh.
+  async function processFrame(base64DataUrl) {
+  if (!shouldProcessFrame()) return;
+
+  return new Promise((resolve) => {
+    img.onload = async () => {
+      try {
+        // Resize canvas to match the loaded image
+        canvas.width  = img.naturalWidth  || img.width  || 640;
+        canvas.height = img.naturalHeight || img.height || 480;
+
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          postToRN({ type: 'ERROR', code: 'CANVAS_ERROR', message: 'Could not get 2D context' });
+          resolve();
+          return;
+        }
+
+        // Draw the image onto the canvas — MediaPipe reads pixels from here
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        await faceMesh.send({ image: canvas });
+      } catch (err) {
+        postToRN({ type: 'ERROR', code: 'INFERENCE_ERROR', message: String(err) });
+      }
+      resolve();
+    };
+    img.onerror = () => {
+      postToRN({ type: 'ERROR', code: 'IMAGE_DECODE_ERROR', message: 'Failed to decode frame' });
+      resolve();
+    };
+    img.src = base64DataUrl;
+  });
+}
+
+  // ── Commands from React Native ────────────────────────────────────────
+  window.addEventListener('message', async (event) => {
+    try {
+      const cmd = JSON.parse(event.data);
+
+      if (cmd.type === 'FRAME') {
+        if (!faceMesh) {
+          postToRN({ type: 'ERROR', code: 'NOT_READY', message: 'FaceMesh not initialized yet' });
+          return;
+        }
+        await processFrame(cmd.data);
+      } else if (cmd.type === 'PAUSE') {
+        lastFrameTime = Date.now() + 999_999;
+      } else if (cmd.type === 'RESUME') {
+        lastFrameTime = 0;
+      }
+    } catch (_) {}
+  });
+
+  // ── Ready ─────────────────────────────────────────────────────────────
+  window.addEventListener('load', () => {
+    setStatus('FaceProcessor ready — awaiting frames');
+    postToRN({ type: 'READY' });
+  });
+</script>
+</body>
+</html>

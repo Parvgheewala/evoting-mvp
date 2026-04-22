@@ -6,7 +6,7 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "ignoreDeprecations": "6.0",
+    "skipLibCheck": true,
     "types": ["nativewind/types"]   // 👈 ADD THIS
   },
   "include": [

@@ -64,10 +64,13 @@ export type RegisterPayload = {
   voter_id:   string;
 };
 
-export type LivenessPayload = {
-  voter_id:     string;
-  image_base64: string;
-};
+/**
+ * LivenessPayload is defined in api/client.ts.
+ * Re-exported here for convenience — import from api/client directly
+ * for the full type including frames and challenge_results.
+ * @see mobile/src/api/client.ts → LivenessPayload
+ */
+export type { LivenessPayload } from "../api/client";
 
 export type VotePayload = {
   voter_id:      string;
@@ -85,9 +88,8 @@ export type RegisterResponse = {
 };
 
 export type LivenessResponse = {
-  passed:        boolean;
-  session_token: string;
-  message:       string;
+  liveness_passed: boolean;   // renamed — matches backend LivenessSubmitResponse
+  session_id:      string;
 };
 
 export type BallotResponse = {

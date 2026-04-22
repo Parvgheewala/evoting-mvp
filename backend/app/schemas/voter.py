@@ -83,13 +83,26 @@ class RegistrationDuplicateError(BaseModel):
 
 
 class ChallengeResult(BaseModel):
-    """Single challenge completion event inside a liveness submission."""
+    """
+    Single challenge completion event submitted by the mobile client.
+
+    SECURITY NOTE:
+    The `passed` field is accepted for schema compatibility only.
+    It is NEVER used by the backend to make a liveness decision.
+    All pass/fail decisions are computed server-side from frames_meta
+    signal values in liveness_service.verify_liveness_session().
+    """
 
     challenge: str = Field(
         description="Challenge name, e.g. 'blink_twice'",
         examples=["blink_twice"],
     )
-    passed: bool = Field(description="Whether the challenge was completed")
+    passed: bool = Field(
+        description=(
+            "Client-reported completion status. "
+            "IGNORED by backend — server recomputes from frames_meta."
+        )
+    )
     timestamp_ms: Optional[int] = Field(
         default=None,
         description="Client-side epoch ms when the challenge completed",
@@ -101,11 +114,27 @@ class LivenessSubmitRequest(BaseModel):
     POST /api/v1/registration/liveness
     Sent as multipart/form-data; this schema covers the JSON fields.
     face_frames files are handled separately via UploadFile.
+
+    SECURITY CONTRACT:
+    - frames_meta is REQUIRED. Submissions without frame data are rejected
+      at the schema level before reaching the service layer.
+    - challenge_results.passed values are parsed but never trusted.
+      Server recomputes pass/fail from frames_meta signal values only.
     """
 
-    session_id: uuid.UUID
-    nonce: str = Field(description="Nonce received from initiate response")
+    session_id:        uuid.UUID
+    nonce:             str  = Field(
+        description="Nonce received from initiate response"
+    )
     challenge_results: List[ChallengeResult]
+    frames_meta:       List[dict] = Field(
+        description=(
+            "Required. Array of FrameData objects captured during liveness. "
+            "Each frame must contain: leftEyeOpen, rightEyeOpen, yaw, pitch, timestamp. "
+            "Minimum 5 frames required. Used for server-side challenge validation."
+        ),
+        min_length=5,
+    )
 
 
 class LivenessSubmitResponse(BaseModel):

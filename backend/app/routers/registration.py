@@ -129,7 +129,15 @@ async def submit_liveness(
         ...,
         description="JSON array of ChallengeResult objects"
     ),
-    face_frames: Optional[List[UploadFile]] = File(default=None),
+    frames_meta: str = Form(
+        ...,
+        description=(
+            "Required. JSON array of FrameData objects. "
+            "Server computes challenge pass/fail from these signals. "
+            "Client-supplied passed values in challenge_results are ignored."
+        )
+    ),
+    face_frames: Optional[UploadFile] = File(default=None),
 ) -> LivenessSubmitResponse:
     """
     Accepts multipart/form-data with:
@@ -144,21 +152,71 @@ async def submit_liveness(
     from app.services.liveness_service import verify_liveness_session
 
     # Parse challenge_results JSON string from form field
+    # Parse challenge_results JSON string from form field
     try:
         parsed_results = json.loads(challenge_results)
     except json.JSONDecodeError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail={
-                "error": "INVALID_CHALLENGE_RESULTS",
+                "error":   "INVALID_CHALLENGE_RESULTS",
                 "message": "challenge_results must be a valid JSON array.",
+            },
+        )
+
+    # SECURITY: strip all client-supplied "passed" values before
+    # forwarding to the service layer. The service will recompute
+    # pass/fail from frames_meta exclusively.
+    # This ensures a client sending {"passed": true} for every
+    # challenge gains zero advantage.
+    sanitised_results = [
+        {
+            "challenge":    r.get("challenge", ""),
+            "timestamp_ms": r.get("timestamp_ms"),
+            # "passed" is deliberately omitted
+        }
+        for r in parsed_results
+        if isinstance(r, dict) and r.get("challenge")
+    ]
+
+    if not sanitised_results:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={
+                "error":   "EMPTY_CHALLENGE_RESULTS",
+                "message": "challenge_results must contain at least one entry.",
+            },
+        )
+
+    # Parse frames_meta — required field, parse and validate length
+    try:
+        parsed_frames: list[dict] = json.loads(frames_meta)
+    except json.JSONDecodeError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={
+                "error":   "INVALID_FRAMES_META",
+                "message": "frames_meta must be a valid JSON array.",
+            },
+        )
+
+    if not isinstance(parsed_frames, list) or len(parsed_frames) < 5:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail={
+                "error":   "INSUFFICIENT_FRAMES",
+                "message": (
+                    f"frames_meta must contain at least 5 frames. "
+                    f"Got {len(parsed_frames) if isinstance(parsed_frames, list) else 0}."
+                ),
             },
         )
 
     result = await verify_liveness_session(
         session_id=str(session_id),
         nonce=nonce,
-        challenge_results=parsed_results,
+        challenge_results=sanitised_results,   # passed values stripped
+        frames_meta=parsed_frames,
     )
 
     if not result["passed"]:
