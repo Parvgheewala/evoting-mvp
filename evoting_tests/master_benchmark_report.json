@@ -1,0 +1,909 @@
+{
+  "run_ts": "2026-04-23T09:29:03",
+  "sections": {
+    "5.4": {
+      "name": "Scalability Curve",
+      "elapsed_sec": 166.53,
+      "result": [
+        {
+          "rate": "moderate",
+          "num_nodes": 1,
+          "target_tps": 50000,
+          "duration_sec": 10,
+          "successes": 0,
+          "failures": 499230,
+          "actual_tps_mock": 0.0,
+          "predicted_real_tps": 0.0,
+          "wall_hit": true,
+          "quorum_failures": 499230,
+          "disk_write_mbps": {
+            "0": 0.0
+          },
+          "latency_ms": {
+            "mean": 0.001,
+            "median": 0.001,
+            "p99": 0.004
+          }
+        },
+        {
+          "rate": "moderate",
+          "num_nodes": 2,
+          "target_tps": 50000,
+          "duration_sec": 10,
+          "successes": 19587,
+          "failures": 0,
+          "actual_tps_mock": 1958.7,
+          "predicted_real_tps": 97935.0,
+          "wall_hit": false,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.26,
+            "1": 0.26
+          },
+          "latency_ms": {
+            "mean": 16.622,
+            "median": 15.931,
+            "p99": 31.581
+          }
+        },
+        {
+          "rate": "moderate",
+          "num_nodes": 4,
+          "target_tps": 50000,
+          "duration_sec": 10,
+          "successes": 13009,
+          "failures": 0,
+          "actual_tps_mock": 1300.9,
+          "predicted_real_tps": 65045.0,
+          "wall_hit": false,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.13,
+            "1": 0.13,
+            "2": 0.13,
+            "3": 0.13
+          },
+          "latency_ms": {
+            "mean": 25.334,
+            "median": 24.409,
+            "p99": 47.223
+          }
+        },
+        {
+          "rate": "moderate",
+          "num_nodes": 8,
+          "target_tps": 50000,
+          "duration_sec": 10,
+          "successes": 8418,
+          "failures": 0,
+          "actual_tps_mock": 841.8,
+          "predicted_real_tps": 42090.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.07,
+            "1": 0.07,
+            "2": 0.07,
+            "3": 0.07,
+            "4": 0.07,
+            "5": 0.07,
+            "6": 0.07,
+            "7": 0.07
+          },
+          "latency_ms": {
+            "mean": 39.891,
+            "median": 39.033,
+            "p99": 67.101
+          }
+        },
+        {
+          "rate": "moderate",
+          "num_nodes": 16,
+          "target_tps": 50000,
+          "duration_sec": 10,
+          "successes": 4983,
+          "failures": 0,
+          "actual_tps_mock": 498.3,
+          "predicted_real_tps": 24915.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.04,
+            "1": 0.04,
+            "2": 0.04,
+            "3": 0.04,
+            "4": 0.04,
+            "5": 0.04,
+            "6": 0.04,
+            "7": 0.04,
+            "8": 0.04,
+            "9": 0.04,
+            "10": 0.04,
+            "11": 0.04,
+            "12": 0.04,
+            "13": 0.04,
+            "14": 0.04,
+            "15": 0.04
+          },
+          "latency_ms": {
+            "mean": 70.516,
+            "median": 69.93,
+            "p99": 104.573
+          }
+        },
+        {
+          "rate": "high",
+          "num_nodes": 1,
+          "target_tps": 200000,
+          "duration_sec": 10,
+          "successes": 0,
+          "failures": 621901,
+          "actual_tps_mock": 0.0,
+          "predicted_real_tps": 0.0,
+          "wall_hit": true,
+          "quorum_failures": 621901,
+          "disk_write_mbps": {
+            "0": 0.0
+          },
+          "latency_ms": {
+            "mean": 0.001,
+            "median": 0.001,
+            "p99": 0.004
+          }
+        },
+        {
+          "rate": "high",
+          "num_nodes": 2,
+          "target_tps": 200000,
+          "duration_sec": 10,
+          "successes": 19818,
+          "failures": 0,
+          "actual_tps_mock": 1981.8,
+          "predicted_real_tps": 99090.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.26,
+            "1": 0.26
+          },
+          "latency_ms": {
+            "mean": 16.402,
+            "median": 15.718,
+            "p99": 31.029
+          }
+        },
+        {
+          "rate": "high",
+          "num_nodes": 4,
+          "target_tps": 200000,
+          "duration_sec": 10,
+          "successes": 13824,
+          "failures": 0,
+          "actual_tps_mock": 1382.4,
+          "predicted_real_tps": 69120.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.14,
+            "1": 0.14,
+            "2": 0.14,
+            "3": 0.14
+          },
+          "latency_ms": {
+            "mean": 23.775,
+            "median": 23.074,
+            "p99": 42.74
+          }
+        },
+        {
+          "rate": "high",
+          "num_nodes": 8,
+          "target_tps": 200000,
+          "duration_sec": 10,
+          "successes": 8395,
+          "failures": 0,
+          "actual_tps_mock": 839.5,
+          "predicted_real_tps": 41975.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.07,
+            "1": 0.07,
+            "2": 0.07,
+            "3": 0.07,
+            "4": 0.07,
+            "5": 0.07,
+            "6": 0.07,
+            "7": 0.07
+          },
+          "latency_ms": {
+            "mean": 39.916,
+            "median": 39.131,
+            "p99": 65.168
+          }
+        },
+        {
+          "rate": "high",
+          "num_nodes": 16,
+          "target_tps": 200000,
+          "duration_sec": 10,
+          "successes": 4950,
+          "failures": 0,
+          "actual_tps_mock": 495.0,
+          "predicted_real_tps": 24750.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.04,
+            "1": 0.04,
+            "2": 0.04,
+            "3": 0.04,
+            "4": 0.04,
+            "5": 0.04,
+            "6": 0.04,
+            "7": 0.04,
+            "8": 0.04,
+            "9": 0.04,
+            "10": 0.04,
+            "11": 0.04,
+            "12": 0.04,
+            "13": 0.04,
+            "14": 0.04,
+            "15": 0.04
+          },
+          "latency_ms": {
+            "mean": 70.342,
+            "median": 69.727,
+            "p99": 103.436
+          }
+        },
+        {
+          "rate": "target",
+          "num_nodes": 1,
+          "target_tps": 500000,
+          "duration_sec": 10,
+          "successes": 0,
+          "failures": 609101,
+          "actual_tps_mock": 0.0,
+          "predicted_real_tps": 0.0,
+          "wall_hit": true,
+          "quorum_failures": 609101,
+          "disk_write_mbps": {
+            "0": 0.0
+          },
+          "latency_ms": {
+            "mean": 0.001,
+            "median": 0.001,
+            "p99": 0.004
+          }
+        },
+        {
+          "rate": "target",
+          "num_nodes": 2,
+          "target_tps": 500000,
+          "duration_sec": 10,
+          "successes": 19260,
+          "failures": 0,
+          "actual_tps_mock": 1926.0,
+          "predicted_real_tps": 96300.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.26,
+            "1": 0.26
+          },
+          "latency_ms": {
+            "mean": 16.913,
+            "median": 16.151,
+            "p99": 32.953
+          }
+        },
+        {
+          "rate": "target",
+          "num_nodes": 4,
+          "target_tps": 500000,
+          "duration_sec": 10,
+          "successes": 13588,
+          "failures": 0,
+          "actual_tps_mock": 1358.8,
+          "predicted_real_tps": 67940.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.14,
+            "1": 0.14,
+            "2": 0.14,
+            "3": 0.14
+          },
+          "latency_ms": {
+            "mean": 24.17,
+            "median": 23.417,
+            "p99": 43.55
+          }
+        },
+        {
+          "rate": "target",
+          "num_nodes": 8,
+          "target_tps": 500000,
+          "duration_sec": 10,
+          "successes": 8573,
+          "failures": 0,
+          "actual_tps_mock": 857.3,
+          "predicted_real_tps": 42865.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.07,
+            "1": 0.07,
+            "2": 0.07,
+            "3": 0.07,
+            "4": 0.07,
+            "5": 0.07,
+            "6": 0.07,
+            "7": 0.07
+          },
+          "latency_ms": {
+            "mean": 39.271,
+            "median": 38.412,
+            "p99": 64.12
+          }
+        },
+        {
+          "rate": "target",
+          "num_nodes": 16,
+          "target_tps": 500000,
+          "duration_sec": 10,
+          "successes": 5011,
+          "failures": 0,
+          "actual_tps_mock": 501.1,
+          "predicted_real_tps": 25055.0,
+          "wall_hit": true,
+          "quorum_failures": 0,
+          "disk_write_mbps": {
+            "0": 0.04,
+            "1": 0.04,
+            "2": 0.04,
+            "3": 0.04,
+            "4": 0.04,
+            "5": 0.04,
+            "6": 0.04,
+            "7": 0.04,
+            "8": 0.04,
+            "9": 0.04,
+            "10": 0.04,
+            "11": 0.04,
+            "12": 0.04,
+            "13": 0.04,
+            "14": 0.04,
+            "15": 0.04
+          },
+          "latency_ms": {
+            "mean": 70.033,
+            "median": 69.8,
+            "p99": 102.272
+          }
+        }
+      ],
+      "checks": [
+        [
+          "16-node 500K TPS target",
+          false,
+          "predicted 25,055 TPS"
+        ]
+      ]
+    },
+    "5.5": {
+      "name": "Fault Tolerance",
+      "elapsed_sec": 45.3,
+      "result": {
+        "phases": [
+          {
+            "label": "baseline_all_healthy",
+            "elapsed_sec": 10.01,
+            "successes": 2448,
+            "failures": 0,
+            "dropped_no_quorum": 0,
+            "actual_tps_mock": 244.6,
+            "predicted_real_tps": 12230.0,
+            "latency_ms": {
+              "mean": 11.57,
+              "p99": 23.34
+            }
+          },
+          {
+            "label": "after_killing_node_0",
+            "elapsed_sec": 10.03,
+            "successes": 2608,
+            "failures": 0,
+            "dropped_no_quorum": 0,
+            "actual_tps_mock": 260.0,
+            "predicted_real_tps": 13002.0,
+            "latency_ms": {
+              "mean": 10.52,
+              "p99": 15.69
+            }
+          },
+          {
+            "label": "after_killing_node_1",
+            "elapsed_sec": 10.0,
+            "successes": 0,
+            "failures": 190432,
+            "dropped_no_quorum": 190432,
+            "actual_tps_mock": 0.0,
+            "predicted_real_tps": 0.0,
+            "latency_ms": {
+              "mean": 0.0,
+              "p99": 0.01
+            }
+          },
+          {
+            "label": "after_killing_node_2",
+            "elapsed_sec": 10.01,
+            "successes": 0,
+            "failures": 198704,
+            "dropped_no_quorum": 198704,
+            "actual_tps_mock": 0.0,
+            "predicted_real_tps": 0.0,
+            "latency_ms": {
+              "mean": 0.0,
+              "p99": 0.0
+            }
+          }
+        ],
+        "recovery_times": {
+          "0": 5.0013,
+          "1": 0.046,
+          "2": 0.0387
+        },
+        "merkle": {
+          "total_checks": 0,
+          "false_positives": 0,
+          "true_positives": 0,
+          "fp_during_failure": []
+        }
+      },
+      "checks": [
+        [
+          "Quorum failure: writes dropped (not silently lost)",
+          true,
+          "dropped=198704"
+        ],
+        [
+          "No Merkle false positives during node failure",
+          true,
+          "fp=0"
+        ]
+      ]
+    },
+    "5.6": {
+      "name": "ZKP Overhead",
+      "elapsed_sec": 30.06,
+      "result": {
+        "generation": [
+          {
+            "scheme": "sha256_stub",
+            "n_samples": 1000,
+            "proof_size_bytes": 32,
+            "gen_time_ms": {
+              "mean": 0.0015,
+              "median": 0.0011,
+              "p99": 0.0039
+            }
+          },
+          {
+            "scheme": "schnorr",
+            "n_samples": 1000,
+            "proof_size_bytes": 96,
+            "gen_time_ms": {
+              "mean": 2.0606,
+              "median": 1.8853,
+              "p99": 3.761
+            }
+          },
+          {
+            "scheme": "bulletproof",
+            "n_samples": 1000,
+            "proof_size_bytes": 32,
+            "gen_time_ms": {
+              "mean": 3.9165,
+              "median": 3.5892,
+              "p99": 7.2534
+            }
+          },
+          {
+            "scheme": "groth16",
+            "n_samples": 1000,
+            "proof_size_bytes": 32,
+            "gen_time_ms": {
+              "mean": 0.993,
+              "median": 0.8949,
+              "p99": 1.9045
+            }
+          }
+        ],
+        "verification": [
+          {
+            "scheme": "sha256_stub",
+            "n_samples": 2000,
+            "verify_time_ms": {
+              "mean": 0.5106,
+              "median": 0.4515,
+              "p99": 0.9656
+            }
+          },
+          {
+            "scheme": "schnorr",
+            "n_samples": 2000,
+            "verify_time_ms": {
+              "mean": 0.5008,
+              "median": 0.4572,
+              "p99": 0.9987
+            }
+          },
+          {
+            "scheme": "bulletproof",
+            "n_samples": 2000,
+            "verify_time_ms": {
+              "mean": 0.5274,
+              "median": 0.483,
+              "p99": 1.0574
+            }
+          },
+          {
+            "scheme": "groth16",
+            "n_samples": 2000,
+            "verify_time_ms": {
+              "mean": 0.472,
+              "median": 0.4096,
+              "p99": 0.988
+            }
+          }
+        ],
+        "concurrency": [
+          {
+            "concurrency": 1,
+            "throughput_vps": 2048.5,
+            "latency_ms": {
+              "mean": 0.4694,
+              "p99": 0.8768
+            },
+            "linear_efficiency_pct": 100.0,
+            "contention_detected": false
+          },
+          {
+            "concurrency": 4,
+            "throughput_vps": 1725.1,
+            "latency_ms": {
+              "mean": 0.5218,
+              "p99": 0.9007
+            },
+            "linear_efficiency_pct": 21.1,
+            "contention_detected": true
+          },
+          {
+            "concurrency": 8,
+            "throughput_vps": 2030.4,
+            "latency_ms": {
+              "mean": 2.5548,
+              "p99": 110.2359
+            },
+            "linear_efficiency_pct": 12.4,
+            "contention_detected": true
+          },
+          {
+            "concurrency": 16,
+            "throughput_vps": 2232.0,
+            "latency_ms": {
+              "mean": 2.1907,
+              "p99": 88.6275
+            },
+            "linear_efficiency_pct": 6.8,
+            "contention_detected": true
+          },
+          {
+            "concurrency": 32,
+            "throughput_vps": 1880.1,
+            "latency_ms": {
+              "mean": 1.3935,
+              "p99": 23.2385
+            },
+            "linear_efficiency_pct": 2.9,
+            "contention_detected": true
+          },
+          {
+            "concurrency": 64,
+            "throughput_vps": 1879.4,
+            "latency_ms": {
+              "mean": 0.459,
+              "p99": 0.8387
+            },
+            "linear_efficiency_pct": 1.4,
+            "contention_detected": true
+          }
+        ],
+        "mobile_predictions": {
+          "android_snapdragon700": {
+            "predicted_mean_ms": 6.59,
+            "calibration_factor": 3.2,
+            "note": "Predicted \u2014 replace with real device measurement when available"
+          },
+          "iphone_a15": {
+            "predicted_mean_ms": 3.71,
+            "calibration_factor": 1.8,
+            "note": "Predicted \u2014 replace with real device measurement when available"
+          }
+        }
+      },
+      "checks": [
+        [
+          "Schnorr verify <10ms mean",
+          true,
+          "0.5008ms"
+        ],
+        [
+          "No lock contention up to 32 workers",
+          false,
+          "contention detected"
+        ]
+      ]
+    },
+    "5.7": {
+      "name": "Homomorphic Tally",
+      "elapsed_sec": 14.76,
+      "result": {
+        "sequential": [
+          {
+            "mode": "sequential",
+            "num_ballots": 100000,
+            "elapsed_sec": 0.1028,
+            "wall_sec": 0.1028,
+            "memory_mb": 48.83,
+            "tally_rate_kbps": 972.7
+          },
+          {
+            "mode": "sequential",
+            "num_ballots": 1000000,
+            "elapsed_sec": 0.9379,
+            "wall_sec": 0.9379,
+            "memory_mb": 488.28,
+            "tally_rate_kbps": 1066.2
+          },
+          {
+            "mode": "sequential",
+            "num_ballots": 10000000,
+            "elapsed_sec": 9.0522,
+            "wall_sec": 9.0522,
+            "memory_mb": 4882.81,
+            "tally_rate_kbps": 1104.7
+          }
+        ],
+        "parallel": [
+          {
+            "mode": "parallel",
+            "num_ballots": 100000,
+            "num_candidates": 5,
+            "wall_sec": 1.1221,
+            "bottleneck_sec": 0.0284,
+            "memory_mb": 48.83,
+            "per_candidate_sec": {
+              "candidate_0": 0.0234,
+              "candidate_1": 0.0284,
+              "candidate_2": 0.018,
+              "candidate_3": 0.0166,
+              "candidate_4": 0.0199
+            }
+          },
+          {
+            "mode": "parallel",
+            "num_ballots": 1000000,
+            "num_candidates": 5,
+            "wall_sec": 0.6998,
+            "bottleneck_sec": 0.2393,
+            "memory_mb": 488.28,
+            "per_candidate_sec": {
+              "candidate_0": 0.2317,
+              "candidate_1": 0.2393,
+              "candidate_2": 0.2092,
+              "candidate_3": 0.2053,
+              "candidate_4": 0.2092
+            }
+          },
+          {
+            "mode": "parallel",
+            "num_ballots": 10000000,
+            "num_candidates": 5,
+            "wall_sec": 2.7909,
+            "bottleneck_sec": 2.3102,
+            "memory_mb": 4882.81,
+            "per_candidate_sec": {
+              "candidate_0": 2.2817,
+              "candidate_1": 2.3102,
+              "candidate_2": 2.2761,
+              "candidate_3": 2.265,
+              "candidate_4": 2.3007
+            }
+          }
+        ],
+        "speedups": [
+          {
+            "num_ballots": 100000,
+            "speedup": 0.09
+          },
+          {
+            "num_ballots": 1000000,
+            "speedup": 1.34
+          },
+          {
+            "num_ballots": 10000000,
+            "speedup": 3.24
+          }
+        ],
+        "decryption": {
+          "trustees": 5,
+          "threshold": 3,
+          "elapsed_sec": 0.000903,
+          "wall_sec": 0.00091
+        }
+      },
+      "checks": []
+    },
+    "5.8": {
+      "name": "Adversarial Benchmarks",
+      "elapsed_sec": 104.31,
+      "result": {
+        "detection_window": {
+          "bundle_size": 5000,
+          "check_interval_sec": 5,
+          "detection": {
+            "best_case_ms": 18.23,
+            "worst_case_ms": 5018.23,
+            "detected": true
+          }
+        },
+        "bisection": [
+          {
+            "num_tampered": 1,
+            "bundle_size": 5000,
+            "found_count": 1,
+            "all_found": true,
+            "bisection_time_ms": 0.781,
+            "log2_depth": 1
+          },
+          {
+            "num_tampered": 10,
+            "bundle_size": 5000,
+            "found_count": 10,
+            "all_found": true,
+            "bisection_time_ms": 1.012,
+            "log2_depth": 4
+          },
+          {
+            "num_tampered": 100,
+            "bundle_size": 5000,
+            "found_count": 100,
+            "all_found": true,
+            "bisection_time_ms": 1.564,
+            "log2_depth": 7
+          },
+          {
+            "num_tampered": 1000,
+            "bundle_size": 5000,
+            "found_count": 1000,
+            "all_found": true,
+            "bisection_time_ms": 4.613,
+            "log2_depth": 10
+          }
+        ],
+        "replay": {
+          "n_samples": 1000,
+          "legitimate_latency_ms": {
+            "mean": 0.0004,
+            "p99": 0.001
+          },
+          "replay_rejection_ms": {
+            "mean": 0.0002,
+            "p99": 0.0003,
+            "all_under_100ms": true
+          }
+        },
+        "adversarial_impact": {
+          "clean": {
+            "adversarial_ratio": 0.0,
+            "total_submissions": 326912,
+            "accepted": 5000,
+            "rejected": 321912,
+            "tps": 21794.1,
+            "accepted_tps": 333.3,
+            "rejection_latency_ms": {
+              "mean": 0.009,
+              "p99": 0.026
+            }
+          },
+          "mixed": {
+            "adversarial_ratio": 0.1,
+            "total_submissions": 332800,
+            "accepted": 5000,
+            "rejected": 327800,
+            "tps": 22186.7,
+            "accepted_tps": 333.3,
+            "rejection_latency_ms": {
+              "mean": 0.008,
+              "p99": 0.024
+            }
+          },
+          "accepted_tps_drop_pct": 0.0,
+          "rejection_invisible": true
+        }
+      },
+      "checks": [
+        [
+          "Replay rejection p99 < 100ms",
+          true,
+          "p99=0.0003ms"
+        ],
+        [
+          "10% adversarial load invisible (< 5% TPS drop)",
+          true,
+          "drop=0.0%"
+        ]
+      ]
+    },
+    "5.2": {
+      "name": "500K TPS Stress Test",
+      "elapsed_sec": 12.21,
+      "result": {
+        "config": {
+          "num_nodes": 16,
+          "target_tps": 500000,
+          "duration_sec": 12.02797339999961,
+          "worker_threads": 16,
+          "ballot_size_b": 512
+        },
+        "throughput": {
+          "total_writes": 5024,
+          "total_failures": 0,
+          "quorum_failures": 0,
+          "actual_tps_mock": 417.7,
+          "predicted_real_tps": 20885.0,
+          "sustained_real_tps": 20880.0,
+          "tps_snapshots": [
+            22720.0,
+            19040.0
+          ],
+          "wall_hit": true,
+          "target_achieved": false
+        },
+        "latency_ms": {
+          "mean": 33.646,
+          "median": 32.952,
+          "p99": 49.733
+        },
+        "resources_per_node": {
+          "estimated_cpu_cores": 0.01,
+          "estimated_ram_gb": 0.05,
+          "disk_write_mbps": 0.6,
+          "tps_per_node": 1305.0
+        },
+        "host_resources_during_test": {
+          "cpu_mean_pct": 60.3,
+          "cpu_max_pct": 73.6,
+          "ram_mean_pct": 84.9
+        },
+        "disk_write_mbps_total": 0.5,
+        "cluster_write_quorum": 9
+      },
+      "checks": [
+        [
+          "500K TPS target achieved (16 nodes)",
+          false,
+          "sustained 20,880 TPS"
+        ],
+        [
+          "p99 latency <500ms",
+          true,
+          "49.733ms"
+        ]
+      ]
+    }
+  }
+}

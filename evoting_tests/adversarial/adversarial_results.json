@@ -1,0 +1,85 @@
+{
+  "detection_window": {
+    "bundle_size": 5000,
+    "check_interval_sec": 5,
+    "detection": {
+      "best_case_ms": 18.23,
+      "worst_case_ms": 5018.23,
+      "detected": true
+    }
+  },
+  "bisection": [
+    {
+      "num_tampered": 1,
+      "bundle_size": 5000,
+      "found_count": 1,
+      "all_found": true,
+      "bisection_time_ms": 0.781,
+      "log2_depth": 1
+    },
+    {
+      "num_tampered": 10,
+      "bundle_size": 5000,
+      "found_count": 10,
+      "all_found": true,
+      "bisection_time_ms": 1.012,
+      "log2_depth": 4
+    },
+    {
+      "num_tampered": 100,
+      "bundle_size": 5000,
+      "found_count": 100,
+      "all_found": true,
+      "bisection_time_ms": 1.564,
+      "log2_depth": 7
+    },
+    {
+      "num_tampered": 1000,
+      "bundle_size": 5000,
+      "found_count": 1000,
+      "all_found": true,
+      "bisection_time_ms": 4.613,
+      "log2_depth": 10
+    }
+  ],
+  "replay": {
+    "n_samples": 1000,
+    "legitimate_latency_ms": {
+      "mean": 0.0004,
+      "p99": 0.001
+    },
+    "replay_rejection_ms": {
+      "mean": 0.0002,
+      "p99": 0.0003,
+      "all_under_100ms": true
+    }
+  },
+  "adversarial_impact": {
+    "clean": {
+      "adversarial_ratio": 0.0,
+      "total_submissions": 326912,
+      "accepted": 5000,
+      "rejected": 321912,
+      "tps": 21794.1,
+      "accepted_tps": 333.3,
+      "rejection_latency_ms": {
+        "mean": 0.009,
+        "p99": 0.026
+      }
+    },
+    "mixed": {
+      "adversarial_ratio": 0.1,
+      "total_submissions": 332800,
+      "accepted": 5000,
+      "rejected": 327800,
+      "tps": 22186.7,
+      "accepted_tps": 333.3,
+      "rejection_latency_ms": {
+        "mean": 0.008,
+        "p99": 0.024
+      }
+    },
+    "accepted_tps_drop_pct": 0.0,
+    "rejection_invisible": true
+  }
+}

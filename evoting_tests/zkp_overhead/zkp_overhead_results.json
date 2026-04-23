@@ -1,0 +1,156 @@
+{
+  "generation": [
+    {
+      "scheme": "sha256_stub",
+      "n_samples": 1000,
+      "proof_size_bytes": 32,
+      "gen_time_ms": {
+        "mean": 0.0015,
+        "median": 0.0011,
+        "p99": 0.0039
+      }
+    },
+    {
+      "scheme": "schnorr",
+      "n_samples": 1000,
+      "proof_size_bytes": 96,
+      "gen_time_ms": {
+        "mean": 2.0606,
+        "median": 1.8853,
+        "p99": 3.761
+      }
+    },
+    {
+      "scheme": "bulletproof",
+      "n_samples": 1000,
+      "proof_size_bytes": 32,
+      "gen_time_ms": {
+        "mean": 3.9165,
+        "median": 3.5892,
+        "p99": 7.2534
+      }
+    },
+    {
+      "scheme": "groth16",
+      "n_samples": 1000,
+      "proof_size_bytes": 32,
+      "gen_time_ms": {
+        "mean": 0.993,
+        "median": 0.8949,
+        "p99": 1.9045
+      }
+    }
+  ],
+  "verification": [
+    {
+      "scheme": "sha256_stub",
+      "n_samples": 2000,
+      "verify_time_ms": {
+        "mean": 0.5106,
+        "median": 0.4515,
+        "p99": 0.9656
+      }
+    },
+    {
+      "scheme": "schnorr",
+      "n_samples": 2000,
+      "verify_time_ms": {
+        "mean": 0.5008,
+        "median": 0.4572,
+        "p99": 0.9987
+      }
+    },
+    {
+      "scheme": "bulletproof",
+      "n_samples": 2000,
+      "verify_time_ms": {
+        "mean": 0.5274,
+        "median": 0.483,
+        "p99": 1.0574
+      }
+    },
+    {
+      "scheme": "groth16",
+      "n_samples": 2000,
+      "verify_time_ms": {
+        "mean": 0.472,
+        "median": 0.4096,
+        "p99": 0.988
+      }
+    }
+  ],
+  "concurrency": [
+    {
+      "concurrency": 1,
+      "throughput_vps": 2048.5,
+      "latency_ms": {
+        "mean": 0.4694,
+        "p99": 0.8768
+      },
+      "linear_efficiency_pct": 100.0,
+      "contention_detected": false
+    },
+    {
+      "concurrency": 4,
+      "throughput_vps": 1725.1,
+      "latency_ms": {
+        "mean": 0.5218,
+        "p99": 0.9007
+      },
+      "linear_efficiency_pct": 21.1,
+      "contention_detected": true
+    },
+    {
+      "concurrency": 8,
+      "throughput_vps": 2030.4,
+      "latency_ms": {
+        "mean": 2.5548,
+        "p99": 110.2359
+      },
+      "linear_efficiency_pct": 12.4,
+      "contention_detected": true
+    },
+    {
+      "concurrency": 16,
+      "throughput_vps": 2232.0,
+      "latency_ms": {
+        "mean": 2.1907,
+        "p99": 88.6275
+      },
+      "linear_efficiency_pct": 6.8,
+      "contention_detected": true
+    },
+    {
+      "concurrency": 32,
+      "throughput_vps": 1880.1,
+      "latency_ms": {
+        "mean": 1.3935,
+        "p99": 23.2385
+      },
+      "linear_efficiency_pct": 2.9,
+      "contention_detected": true
+    },
+    {
+      "concurrency": 64,
+      "throughput_vps": 1879.4,
+      "latency_ms": {
+        "mean": 0.459,
+        "p99": 0.8387
+      },
+      "linear_efficiency_pct": 1.4,
+      "contention_detected": true
+    }
+  ],
+  "mobile_predictions": {
+    "android_snapdragon700": {
+      "predicted_mean_ms": 6.59,
+      "calibration_factor": 3.2,
+      "note": "Predicted \u2014 replace with real device measurement when available"
+    },
+    "iphone_a15": {
+      "predicted_mean_ms": 3.71,
+      "calibration_factor": 1.8,
+      "note": "Predicted \u2014 replace with real device measurement when available"
+    }
+  }
+}

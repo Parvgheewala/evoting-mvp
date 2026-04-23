@@ -1,0 +1,380 @@
+[
+  {
+    "rate": "moderate",
+    "num_nodes": 1,
+    "target_tps": 50000,
+    "duration_sec": 10,
+    "successes": 0,
+    "failures": 499230,
+    "actual_tps_mock": 0.0,
+    "predicted_real_tps": 0.0,
+    "wall_hit": true,
+    "quorum_failures": 499230,
+    "disk_write_mbps": {
+      "0": 0.0
+    },
+    "latency_ms": {
+      "mean": 0.001,
+      "median": 0.001,
+      "p99": 0.004
+    }
+  },
+  {
+    "rate": "moderate",
+    "num_nodes": 2,
+    "target_tps": 50000,
+    "duration_sec": 10,
+    "successes": 19587,
+    "failures": 0,
+    "actual_tps_mock": 1958.7,
+    "predicted_real_tps": 97935.0,
+    "wall_hit": false,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.26,
+      "1": 0.26
+    },
+    "latency_ms": {
+      "mean": 16.622,
+      "median": 15.931,
+      "p99": 31.581
+    }
+  },
+  {
+    "rate": "moderate",
+    "num_nodes": 4,
+    "target_tps": 50000,
+    "duration_sec": 10,
+    "successes": 13009,
+    "failures": 0,
+    "actual_tps_mock": 1300.9,
+    "predicted_real_tps": 65045.0,
+    "wall_hit": false,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.13,
+      "1": 0.13,
+      "2": 0.13,
+      "3": 0.13
+    },
+    "latency_ms": {
+      "mean": 25.334,
+      "median": 24.409,
+      "p99": 47.223
+    }
+  },
+  {
+    "rate": "moderate",
+    "num_nodes": 8,
+    "target_tps": 50000,
+    "duration_sec": 10,
+    "successes": 8418,
+    "failures": 0,
+    "actual_tps_mock": 841.8,
+    "predicted_real_tps": 42090.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.07,
+      "1": 0.07,
+      "2": 0.07,
+      "3": 0.07,
+      "4": 0.07,
+      "5": 0.07,
+      "6": 0.07,
+      "7": 0.07
+    },
+    "latency_ms": {
+      "mean": 39.891,
+      "median": 39.033,
+      "p99": 67.101
+    }
+  },
+  {
+    "rate": "moderate",
+    "num_nodes": 16,
+    "target_tps": 50000,
+    "duration_sec": 10,
+    "successes": 4983,
+    "failures": 0,
+    "actual_tps_mock": 498.3,
+    "predicted_real_tps": 24915.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.04,
+      "1": 0.04,
+      "2": 0.04,
+      "3": 0.04,
+      "4": 0.04,
+      "5": 0.04,
+      "6": 0.04,
+      "7": 0.04,
+      "8": 0.04,
+      "9": 0.04,
+      "10": 0.04,
+      "11": 0.04,
+      "12": 0.04,
+      "13": 0.04,
+      "14": 0.04,
+      "15": 0.04
+    },
+    "latency_ms": {
+      "mean": 70.516,
+      "median": 69.93,
+      "p99": 104.573
+    }
+  },
+  {
+    "rate": "high",
+    "num_nodes": 1,
+    "target_tps": 200000,
+    "duration_sec": 10,
+    "successes": 0,
+    "failures": 621901,
+    "actual_tps_mock": 0.0,
+    "predicted_real_tps": 0.0,
+    "wall_hit": true,
+    "quorum_failures": 621901,
+    "disk_write_mbps": {
+      "0": 0.0
+    },
+    "latency_ms": {
+      "mean": 0.001,
+      "median": 0.001,
+      "p99": 0.004
+    }
+  },
+  {
+    "rate": "high",
+    "num_nodes": 2,
+    "target_tps": 200000,
+    "duration_sec": 10,
+    "successes": 19818,
+    "failures": 0,
+    "actual_tps_mock": 1981.8,
+    "predicted_real_tps": 99090.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.26,
+      "1": 0.26
+    },
+    "latency_ms": {
+      "mean": 16.402,
+      "median": 15.718,
+      "p99": 31.029
+    }
+  },
+  {
+    "rate": "high",
+    "num_nodes": 4,
+    "target_tps": 200000,
+    "duration_sec": 10,
+    "successes": 13824,
+    "failures": 0,
+    "actual_tps_mock": 1382.4,
+    "predicted_real_tps": 69120.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.14,
+      "1": 0.14,
+      "2": 0.14,
+      "3": 0.14
+    },
+    "latency_ms": {
+      "mean": 23.775,
+      "median": 23.074,
+      "p99": 42.74
+    }
+  },
+  {
+    "rate": "high",
+    "num_nodes": 8,
+    "target_tps": 200000,
+    "duration_sec": 10,
+    "successes": 8395,
+    "failures": 0,
+    "actual_tps_mock": 839.5,
+    "predicted_real_tps": 41975.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.07,
+      "1": 0.07,
+      "2": 0.07,
+      "3": 0.07,
+      "4": 0.07,
+      "5": 0.07,
+      "6": 0.07,
+      "7": 0.07
+    },
+    "latency_ms": {
+      "mean": 39.916,
+      "median": 39.131,
+      "p99": 65.168
+    }
+  },
+  {
+    "rate": "high",
+    "num_nodes": 16,
+    "target_tps": 200000,
+    "duration_sec": 10,
+    "successes": 4950,
+    "failures": 0,
+    "actual_tps_mock": 495.0,
+    "predicted_real_tps": 24750.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.04,
+      "1": 0.04,
+      "2": 0.04,
+      "3": 0.04,
+      "4": 0.04,
+      "5": 0.04,
+      "6": 0.04,
+      "7": 0.04,
+      "8": 0.04,
+      "9": 0.04,
+      "10": 0.04,
+      "11": 0.04,
+      "12": 0.04,
+      "13": 0.04,
+      "14": 0.04,
+      "15": 0.04
+    },
+    "latency_ms": {
+      "mean": 70.342,
+      "median": 69.727,
+      "p99": 103.436
+    }
+  },
+  {
+    "rate": "target",
+    "num_nodes": 1,
+    "target_tps": 500000,
+    "duration_sec": 10,
+    "successes": 0,
+    "failures": 609101,
+    "actual_tps_mock": 0.0,
+    "predicted_real_tps": 0.0,
+    "wall_hit": true,
+    "quorum_failures": 609101,
+    "disk_write_mbps": {
+      "0": 0.0
+    },
+    "latency_ms": {
+      "mean": 0.001,
+      "median": 0.001,
+      "p99": 0.004
+    }
+  },
+  {
+    "rate": "target",
+    "num_nodes": 2,
+    "target_tps": 500000,
+    "duration_sec": 10,
+    "successes": 19260,
+    "failures": 0,
+    "actual_tps_mock": 1926.0,
+    "predicted_real_tps": 96300.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.26,
+      "1": 0.26
+    },
+    "latency_ms": {
+      "mean": 16.913,
+      "median": 16.151,
+      "p99": 32.953
+    }
+  },
+  {
+    "rate": "target",
+    "num_nodes": 4,
+    "target_tps": 500000,
+    "duration_sec": 10,
+    "successes": 13588,
+    "failures": 0,
+    "actual_tps_mock": 1358.8,
+    "predicted_real_tps": 67940.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.14,
+      "1": 0.14,
+      "2": 0.14,
+      "3": 0.14
+    },
+    "latency_ms": {
+      "mean": 24.17,
+      "median": 23.417,
+      "p99": 43.55
+    }
+  },
+  {
+    "rate": "target",
+    "num_nodes": 8,
+    "target_tps": 500000,
+    "duration_sec": 10,
+    "successes": 8573,
+    "failures": 0,
+    "actual_tps_mock": 857.3,
+    "predicted_real_tps": 42865.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.07,
+      "1": 0.07,
+      "2": 0.07,
+      "3": 0.07,
+      "4": 0.07,
+      "5": 0.07,
+      "6": 0.07,
+      "7": 0.07
+    },
+    "latency_ms": {
+      "mean": 39.271,
+      "median": 38.412,
+      "p99": 64.12
+    }
+  },
+  {
+    "rate": "target",
+    "num_nodes": 16,
+    "target_tps": 500000,
+    "duration_sec": 10,
+    "successes": 5011,
+    "failures": 0,
+    "actual_tps_mock": 501.1,
+    "predicted_real_tps": 25055.0,
+    "wall_hit": true,
+    "quorum_failures": 0,
+    "disk_write_mbps": {
+      "0": 0.04,
+      "1": 0.04,
+      "2": 0.04,
+      "3": 0.04,
+      "4": 0.04,
+      "5": 0.04,
+      "6": 0.04,
+      "7": 0.04,
+      "8": 0.04,
+      "9": 0.04,
+      "10": 0.04,
+      "11": 0.04,
+      "12": 0.04,
+      "13": 0.04,
+      "14": 0.04,
+      "15": 0.04
+    },
+    "latency_ms": {
+      "mean": 70.033,
+      "median": 69.8,
+      "p99": 102.272
+    }
+  }
+]

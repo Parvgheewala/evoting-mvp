@@ -1,0 +1,95 @@
+{
+  "sequential": [
+    {
+      "mode": "sequential",
+      "num_ballots": 100000,
+      "elapsed_sec": 0.1028,
+      "wall_sec": 0.1028,
+      "memory_mb": 48.83,
+      "tally_rate_kbps": 972.7
+    },
+    {
+      "mode": "sequential",
+      "num_ballots": 1000000,
+      "elapsed_sec": 0.9379,
+      "wall_sec": 0.9379,
+      "memory_mb": 488.28,
+      "tally_rate_kbps": 1066.2
+    },
+    {
+      "mode": "sequential",
+      "num_ballots": 10000000,
+      "elapsed_sec": 9.0522,
+      "wall_sec": 9.0522,
+      "memory_mb": 4882.81,
+      "tally_rate_kbps": 1104.7
+    }
+  ],
+  "parallel": [
+    {
+      "mode": "parallel",
+      "num_ballots": 100000,
+      "num_candidates": 5,
+      "wall_sec": 1.1221,
+      "bottleneck_sec": 0.0284,
+      "memory_mb": 48.83,
+      "per_candidate_sec": {
+        "candidate_0": 0.0234,
+        "candidate_1": 0.0284,
+        "candidate_2": 0.018,
+        "candidate_3": 0.0166,
+        "candidate_4": 0.0199
+      }
+    },
+    {
+      "mode": "parallel",
+      "num_ballots": 1000000,
+      "num_candidates": 5,
+      "wall_sec": 0.6998,
+      "bottleneck_sec": 0.2393,
+      "memory_mb": 488.28,
+      "per_candidate_sec": {
+        "candidate_0": 0.2317,
+        "candidate_1": 0.2393,
+        "candidate_2": 0.2092,
+        "candidate_3": 0.2053,
+        "candidate_4": 0.2092
+      }
+    },
+    {
+      "mode": "parallel",
+      "num_ballots": 10000000,
+      "num_candidates": 5,
+      "wall_sec": 2.7909,
+      "bottleneck_sec": 2.3102,
+      "memory_mb": 4882.81,
+      "per_candidate_sec": {
+        "candidate_0": 2.2817,
+        "candidate_1": 2.3102,
+        "candidate_2": 2.2761,
+        "candidate_3": 2.265,
+        "candidate_4": 2.3007
+      }
+    }
+  ],
+  "speedups": [
+    {
+      "num_ballots": 100000,
+      "speedup": 0.09
+    },
+    {
+      "num_ballots": 1000000,
+      "speedup": 1.34
+    },
+    {
+      "num_ballots": 10000000,
+      "speedup": 3.24
+    }
+  ],
+  "decryption": {
+    "trustees": 5,
+    "threshold": 3,
+    "elapsed_sec": 0.000903,
+    "wall_sec": 0.00091
+  }
+}

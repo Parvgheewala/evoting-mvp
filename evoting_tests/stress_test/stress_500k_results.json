@@ -1,0 +1,41 @@
+{
+  "config": {
+    "num_nodes": 16,
+    "target_tps": 500000,
+    "duration_sec": 12.02797339999961,
+    "worker_threads": 16,
+    "ballot_size_b": 512
+  },
+  "throughput": {
+    "total_writes": 5024,
+    "total_failures": 0,
+    "quorum_failures": 0,
+    "actual_tps_mock": 417.7,
+    "predicted_real_tps": 20885.0,
+    "sustained_real_tps": 20880.0,
+    "tps_snapshots": [
+      22720.0,
+      19040.0
+    ],
+    "wall_hit": true,
+    "target_achieved": false
+  },
+  "latency_ms": {
+    "mean": 33.646,
+    "median": 32.952,
+    "p99": 49.733
+  },
+  "resources_per_node": {
+    "estimated_cpu_cores": 0.01,
+    "estimated_ram_gb": 0.05,
+    "disk_write_mbps": 0.6,
+    "tps_per_node": 1305.0
+  },
+  "host_resources_during_test": {
+    "cpu_mean_pct": 60.3,
+    "cpu_max_pct": 73.6,
+    "ram_mean_pct": 84.9
+  },
+  "disk_write_mbps_total": 0.5,
+  "cluster_write_quorum": 9
+}
